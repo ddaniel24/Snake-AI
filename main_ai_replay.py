@@ -10,7 +10,6 @@ GAME_TITLE = "Snake AI"
 SLOW_DOWN_SPEED = True
 
 MODEL_PATH = "saved_models\\snake-model-20200507-185914-15x64x64x64x3.h5"
-# MODEL_PATH = "saved_models\\snake-model-20200508-195744-15x64x64x64x3.h5"
 
 
 def main():
