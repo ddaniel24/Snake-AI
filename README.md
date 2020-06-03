@@ -31,6 +31,7 @@ The following controls are available:
 ## Project demo
 This is a recording for the execution on the same model which is also included in the project. The model is obtained after 750 steps of training.
 
+![](demo/snake-AI.gif)
+
 ## TODO
-- Add demo video above.
 - Code comments will be included in the near future.
