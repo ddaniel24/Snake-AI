@@ -5,7 +5,6 @@ The current project is an implementation of **Deep Reinforcement Learning** for 
 ## Project structure
 
 The code is grouped in the following packages:
-- **demo_video**: folder containing a demo video of the game
 - **game_src**: source code for the actual game
 - **snake_nn**: source code for the deep learning implementation
 - **saved_models**: the folder where models are saved after training. A demo model is included in this folder
@@ -32,7 +31,6 @@ The following controls are available:
 ## Project demo
 This is a recording for the execution on the same model which is also included in the project. The model is obtained after 750 steps of training.
 
-![](demo_video/Snake%20AI.mp4)
-
 ## TODO
-Code comments will be included in the near future.
+- Add demo video above.
+- Code comments will be included in the near future.
