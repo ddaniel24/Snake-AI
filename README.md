@@ -31,7 +31,9 @@ The following controls are available:
 ## Project demo
 This is a recording for the execution on the same model which is also included in the project. The model is obtained after 750 steps of training.
 
-![](demo/snake-AI.gif)
+<p align="center">
+<img src='./demo/snake-AI.gif' width="320" height="320">
+</p>
 
 ## TODO
 - Code comments will be included in the near future.
