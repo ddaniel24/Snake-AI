@@ -2,7 +2,7 @@
 
 The current project is an implementation of **Deep Reinforcement Learning** for the game **Snake**. The scope is to show how an AI snake learns to play the game on its own.
 
-###### Project structure
+## Project structure
 
 The code is grouped in the following packages:
 - **game_src**: source code for the actual game
@@ -15,7 +15,7 @@ For clarity, there are three distinct main files, independent one from another. 
 - _main_ai_train.py_ - executes the training algorithm for the snake and saves the output model.
 - _main_ai_replay.py_ - loads a model and runs the game using the neural network from the model.
 
-###### Project execution
+## Project execution
 Clone the current git repository.
 
 Before execution, make sure to install all dependencies from _requirements.txt_. 
@@ -28,5 +28,5 @@ The following controls are available:
 - during manual play, the snake is controlled with the arrow keys
 - during AI execution (either train or replay), the snake speed can be toggled using key S (for "speed")
 
-###### TODO
+## TODO
 Code comments will be included in the near future.
