@@ -39,6 +39,10 @@ class Game:
         self.break_game = False
 
     def process_events(self):
+        """
+            Process keyboard events during "play mode". In other modes, this method is not used, as each mode
+            implements its own processing method.
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -62,6 +66,9 @@ class Game:
         return self.running
 
     def logic(self):
+        """
+            Execute the logic of the game. This implies moving the snake and checking for collisions.
+        """
 
         self.snake.move_snake()
 
@@ -86,14 +93,20 @@ class Game:
             self.generate_food()
 
     def generate_food(self):
+        """
+            Method to add food to the game (after the food has just been eaten, for e.g.)
+        """
         run_loop = True
         brick = None
+
         while run_loop:
+            # Generate random position for food
             brick = Brick(self.brick_size)
             random_x = random.randint(0, self.game_width / self.brick_size - 1)
             random_y = random.randint(0, self.game_height / self.brick_size - 1)
             brick.set_position(random_x * self.brick_size, random_y * self.brick_size)
 
+            # Make sure food is not randomly added on the wall or on the snake
             if pygame.sprite.spritecollideany(brick, self.wall) or pygame.sprite.spritecollideany(brick, self.snake):
                 run_loop = True
             else:
@@ -107,10 +120,26 @@ class Game:
         self.food.add(brick)
 
     def check_collision_front_left_right(self):
+        """
+            This method is used during AI training to compute the agent state.
+            The goal is to detect if a collision might happen either in front, left or right, if the snake were to
+            move in that direction.
+            The logic is the following: depending on the snake direction, virtual bricks are added in front, left
+            and right. If these bricks collide with either the wall or the snake itself, it means that if the
+            snake were to make that move, it would die.
+
+            Returns:
+            - a vector [bool, bool, bool] if collision might happen in front, left, right
+        """
+
+        # Virtual bricks used for collision check, relative to the snake head position
+
         snake_first_brick = self.snake.get_first_brick()
         front_brick = Brick(self.brick_size)
         left_brick = Brick(self.brick_size)
         right_brick = Brick(self.brick_size)
+
+        # Virtual bricks position depend on the current direction of the movement
 
         if self.snake.direction is Direction.get_value("UP"):
             front_brick.set_position(snake_first_brick.position_x, snake_first_brick.position_y - self.brick_size)
@@ -134,6 +163,8 @@ class Game:
 
         collision_front, collision_left, collision_right = False, False, False
 
+        # Check collision of virtual bricks with either wall or snake itself
+
         if pygame.sprite.spritecollideany(front_brick, self.wall) or \
                 pygame.sprite.spritecollideany(front_brick, self.snake.tail):
             collision_front = True
@@ -149,6 +180,16 @@ class Game:
         return [collision_front, collision_left, collision_right]
 
     def check_food_position(self):
+        """
+            This method is used during AI training to compute the agent state.
+            The goal is to detect in which quadrant the food is located, considering the snake head as point
+            of origin. Imagine a cartesian system, with the snake head at (0, 0).
+            There are four possible quadrants where the food might be located, plus an extra four possibilities
+            that the food is directly on one of the axis for this system.
+
+            Returns:
+            - a vector [bool, ..., bool] (8 values), with 'true' for the specific quadrant where the food is located
+        """
         delta_x = self.food.food.position_x - self.snake.get_first_brick().position_x
         delta_y = -(self.food.food.position_y - self.snake.get_first_brick().position_y)
 
@@ -160,8 +201,6 @@ class Game:
             angle = int(math.atan2(delta_y, delta_x) * 180 / math.pi)
             if angle < 0:
                 angle += 360
-
-            # print(angle)
 
             if angle == 0:
                 right = True
@@ -183,6 +222,12 @@ class Game:
         return [top, top_left, left, bottom_left, bottom, bottom_right, right, top_right]
 
     def get_snake_direction(self):
+        """
+            This method is used during AI training to compute the agent state.
+
+            Returns:
+            - a vector [bool, ..., bool] (4 values), with 'true' for the current direction the snake is moving
+        """
         up, down, left, right = False, False, False, False
 
         if self.snake.get_direction() is Direction.get_value("UP"):
@@ -197,6 +242,14 @@ class Game:
         return [up, down, left, right]
 
     def compute_distance_to_food(self):
+        """
+            This method is used during AI training.
+            It computes the distance to the food, with the goal of giving a small reward to the agent if it gets
+            closer to the food.
+
+            Returns:
+            - distance to the food (divided by brick size, for clarity)
+        """
         snake_head = self.snake.get_first_brick()
         food = self.food.get_food()
 
@@ -211,13 +264,18 @@ class Game:
         return dist
 
     def render(self):
+        """
+            Render all game elements on screen.
+        """
         self.window.fill(Brick.BLACK)
         self.wall.draw(self.window)
         self.snake.draw(self.window)
         self.food.draw(self.window)
 
+        # Text to display on screen with game number and score
         font = pygame.font.SysFont("arial", 15)
         text = font.render("Game: " + str(self.game_instance_no) + " Score: " + str(self.score), True, Brick.WHITE)
         self.window.blit(text, [20, 20])
 
+        # Render everything to current game display
         pygame.display.flip()

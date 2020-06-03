@@ -8,6 +8,11 @@ GAME_TITLE = "Snake AI"
 
 
 def main():
+    """
+        Main method for running the game in "play mode". In this mode, you can interact with the snake
+        by using the arrow keys. There is no AI at all in this mode.
+    """
+
     pygame.init()
 
     window = pygame.display.set_mode((GAME_WIDTH, GAME_HEIGHT))
@@ -21,7 +26,6 @@ def main():
         clock = pygame.time.Clock()
 
         while game.is_running():
-
             game.process_events()
 
             game.logic()

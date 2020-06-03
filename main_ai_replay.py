@@ -13,6 +13,11 @@ MODEL_PATH = "saved_models\\snake-model-20200507-185914-15x64x64x64x3.h5"
 
 
 def main():
+    """
+        Main method for running the game in "replay mode". In this mode, the neural network loads a model (defined
+        above by the variable MODEL_PATH and runs the game with that model.
+    """
+
     pygame.init()
 
     window = pygame.display.set_mode((GAME_WIDTH, GAME_HEIGHT))

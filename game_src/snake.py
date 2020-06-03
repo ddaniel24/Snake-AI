@@ -3,6 +3,9 @@ from game_src.brick import Brick
 
 
 class Snake(pygame.sprite.Group):
+    """
+        Class extends SpriteGroup in order to make use of the collision methods already implemented in Pygame
+    """
     snake = []
     tail = None
     direction = None
@@ -119,6 +122,9 @@ class Snake(pygame.sprite.Group):
 
 
 class Direction:
+    """
+        Static class for snake direction (no struct alternative in Python)
+    """
     direction_dictionary = {
         "UP": 0,
         "DOWN": 1,

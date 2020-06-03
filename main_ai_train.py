@@ -13,6 +13,11 @@ SLOW_DOWN_SPEED = False
 
 
 def main():
+    """
+        Main method for running the game in "training mode". In this mode, games are generated and the neural
+        network is trained using Deep Reinforcement Learning.
+    """
+
     pygame.init()
 
     agent = NNAgent()
